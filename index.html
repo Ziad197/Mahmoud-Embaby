@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahmoud Embaby | Software Engineer & C++ Developer</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    .cyber-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cyber-card:hover {
+      border-color: rgba(245, 158, 11, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.25);
+    }
+    #matrix-canvas {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.12;
+    }
+    #light-ribbon-canvas {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body class="bg-[#070a12] text-[#f8fafc] font-sans antialiased selection:bg-[#f59e0b]/30 selection:text-white relative overflow-x-hidden min-h-screen">
+
+  <!-- Interactive Matrix Rain & Light Ribbon Canvas -->
+  <canvas id="matrix-canvas"></canvas>
+  <canvas id="light-ribbon-canvas"></canvas>
+  <canvas id="particles-bg" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Glow Backdrops -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-[150px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-1/3 right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-[170px] pointer-events-none z-0"></div>
+
+  <!-- Page Content Container -->
+  <div class="relative z-10">
+
+    <!-- Top Floating Cyber Navbar -->
+    <nav class="sticky top-0 z-50 bg-[#070a12]/85 backdrop-blur-md border-b border-[#1e293b]">
+      <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <a href="#" class="text-lg font-mono font-extrabold tracking-wider text-[#f59e0b] flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#f59e0b]"></span>
+          EMBABY.CPP
+        </a>
+        <div class="space-x-8 text-xs font-mono font-medium hidden md:flex items-center text-[#94a3b8]">
+          <a href="#about" class="hover:text-[#f59e0b] transition duration-200">// ABOUT</a>
+          <a href="#skills" class="hover:text-[#f59e0b] transition duration-200">// SKILLS</a>
+          <a href="#projects" class="hover:text-[#f59e0b] transition duration-200">// PROJECTS</a>
+          <a href="#education" class="hover:text-[#f59e0b] transition duration-200">// EDUCATION</a>
+        </div>
+        <a href="#contact" class="px-4 py-2 text-xs font-mono font-bold text-[#f59e0b] bg-[#451a03]/40 border border-[#b45309] rounded-lg hover:bg-[#b45309] hover:text-white transition duration-300">
+          CONTACT_ME()
+        </a>
+      </div>
+    </nav>
+
+    <!-- Split Terminal Hero Section -->
+    <header class="max-w-7xl mx-auto px-8 pt-16 pb-20">
+      <div class="grid lg:grid-cols-12 gap-10 items-stretch">
+        
+        <!-- Left Side: Terminal Profile Box -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1 text-xs tracking-wider font-mono font-semibold text-[#fbbf24] bg-[#451a03]/40 border border-[#b45309]/50 rounded-md mb-6 w-fit">
+            <span class="w-2 h-2 rounded-full bg-[#fbbf24] animate-ping"></span>
+            SEEKING_SOFTWARE_ENGINEERING_INTERNSHIP
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+            Mahmoud <span class="text-[#f59e0b]">Embaby</span>
+          </h1>
+          <p class="text-lg sm:text-xl text-[#94a3b8] mt-2 font-mono">
+            &gt; Computer Science & Software Engineering Student
+          </p>
+
+          <p class="text-base text-[#cbd5e1] mt-6 leading-relaxed">
+            Passionate CS student at Assiut National University with a strong foundation in Object-Oriented Programming (OOP), Data Structures, and Algorithms. Experienced in problem-solving using C++ and building modular software systems.
+          </p>
+
+          <!-- Quick Stats Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-[#1e293b]">
+            <div class="cyber-card p-4 rounded-xl">
+              <span class="text-xs text-[#94a3b8] font-mono block">MAIN LANGUAGE</span>
+              <span class="text-sm font-bold font-mono text-[#f59e0b]">C++ / OOP</span>
+            </div>
+            <div class="cyber-card p-4 rounded-xl">
+              <span class="text-xs text-[#94a3b8] font-mono block">COMPETITIVE</span>
+              <span class="text-sm font-bold font-mono text-[#fbbf24]">Codeforces</span>
+            </div>
+            <div class="cyber-card p-4 rounded-xl col-span-2 sm:col-span-1">
+              <span class="text-xs text-[#94a3b8] font-mono block">ACADEMIC GPA</span>
+              <span class="text-sm font-bold font-mono text-white">3.0 / 4.0</span>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="#projects" class="px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold text-sm rounded-lg transition shadow-lg shadow-amber-950/40">
+              EXPLORE_PROJECTS()
+            </a>
+            <a href="https://linkedin.com/in/mahmoud-embaby-b670393a4" target="_blank" class="px-6 py-3 cyber-card text-[#cbd5e1] font-mono font-medium text-sm rounded-lg transition">
+              LINKEDIN_PROFILE
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right Side: 3D Interactive Terminal Window -->
+        <div class="lg:col-span-5 flex flex-col">
+          <div id="chart-container" class="relative w-full h-[380px] sm:h-full min-h-[380px] rounded-2xl bg-[#0b1120] border border-[#1e293b] shadow-2xl overflow-hidden flex flex-col justify-between cursor-grab active:cursor-grabbing">
+            <!-- Header bar of code editor -->
+            <div class="bg-[#0f172a] px-4 py-3 border-b border-[#1e293b] flex items-center justify-between text-xs font-mono text-[#64748b]">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                <span class="ml-2 text-[#cbd5e1]">algorithm_engine.cpp</span>
+              </div>
+              <span class="text-[#f59e0b]">3D VIEW</span>
+            </div>
+            
+            <canvas id="cube3dCanvas" class="block w-full h-full"></canvas>
+
+            <div class="bg-[#0f172a]/90 px-4 py-2 border-t border-[#1e293b] text-[11px] font-mono flex justify-between text-[#94a3b8]">
+              <span>Status: <span class="text-green-400">OPTIMIZED</span></span>
+              <span>Drag to rotate 3D Geometry</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Professional Summary -->
+    <section id="about" class="max-w-7xl mx-auto px-8 py-12">
+      <div class="cyber-card p-8 sm:p-10 rounded-2xl">
+        <span class="text-xs uppercase tracking-widest text-[#f59e0b] font-bold font-mono">// CAREER_OBJECTIVE</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-2">Engineered Logic & Algorithmic Problem Solving</h2>
+        <p class="text-slate-300 text-base leading-relaxed mt-4">
+          Passionate Computer Science & Software Engineering student at Assiut National University with a strong foundation in Object-Oriented Programming (OOP), Data Structures, and Algorithms. Experienced in problem-solving using C++ and developing console-based applications. Eager to leverage technical skills in a challenging software engineering internship or entry-level role.
+        </p>
+      </div>
+    </section>
+
+    <!-- Skills Section Matrix -->
+    <section id="skills" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="max-w-2xl mb-10">
+        <h2 class="text-3xl font-extrabold text-white font-mono">// TECHNICAL_SKILLS</h2>
+        <p class="text-[#94a3b8] mt-2 text-sm">Core engineering capabilities, development tools, and soft skills.</p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">&lt;C++&gt;</div>
+          <h3 class="text-lg font-bold text-white mb-2">Programming Language</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">C++ Standard Library, Memory Management, Pointers, Control Flow, Console I/O.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">[OOP]</div>
+          <h3 class="text-lg font-bold text-white mb-2">Core Concepts</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Object-Oriented Programming, Encapsulation, Inheritance, Polymorphism, Modular Code.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">{DSA}</div>
+          <h3 class="text-lg font-bold text-white mb-2">Algorithms & Logic</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Data Structures, Time Complexity Analysis, Problem Solving, Codeforces Practice.</p>
+        </div>
+
+        <div class="cyber-card p-6 rounded-xl">
+          <div class="text-[#f59e0b] font-mono text-2xl font-bold mb-3">/*SOFT*/</div>
+          <h3 class="text-lg font-bold text-white mb-2">Soft Skills</h3>
+          <p class="text-[#94a3b8] text-xs leading-relaxed">Analytical Thinking, Teamwork & Collaboration, Fast Learning, Effective Communication.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid (Two Columns Layout) -->
+    <section id="projects" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="mb-10">
+        <h2 class="text-3xl font-extrabold text-white font-mono">// SOFTWARE_PROJECTS</h2>
+        <p class="text-[#94a3b8] mt-2 text-sm">Modular console-based C++ applications constructed with clean OOP design.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        
+        <!-- Project 1 -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">C++</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">OOP</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Bank Management System</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Designed and implemented a console-based application to manage client accounts, deposits, withdrawals, and transaction history.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Applied Inheritance, Encapsulation, and Polymorphism.</li>
+              <li>Ensured clean, maintainable, and modular code architecture.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>CONSOLE APPLICATION</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="cyber-card p-8 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex gap-2 mb-4">
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">C++</span>
+              <span class="px-2.5 py-1 bg-[#451a03]/50 text-[#f59e0b] text-xs font-mono rounded border border-[#b45309]">OOP</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">Library Management System</h3>
+            <p class="text-[#cbd5e1] text-sm leading-relaxed mb-4">
+              Built an automated library tracking system to manage book inventories, user checkouts, and returns.
+            </p>
+            <ul class="space-y-1.5 text-[#94a3b8] text-xs font-mono list-disc list-inside">
+              <li>Focused on efficient data organization and control flow.</li>
+              <li>Implemented robust input validation for user interactions.</li>
+            </ul>
+          </div>
+          <div class="mt-6 pt-4 border-t border-[#1e293b] flex justify-between items-center text-xs font-mono text-[#94a3b8]">
+            <span>CONSOLE APPLICATION</span>
+            <span class="text-[#f59e0b]">STATUS: COMPLETE</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Education & Training Split Layout -->
+    <section id="education" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="grid lg:grid-cols-2 gap-8">
+        
+        <!-- Education Card -->
+        <div class="cyber-card p-8 rounded-2xl">
+          <span class="text-xs uppercase font-mono text-[#f59e0b] font-bold block mb-2">// ACADEMIC_DEGREE</span>
+          <h3 class="text-xl font-bold text-white">Bachelor of Science in Computer Science</h3>
+          <p class="text-sm text-[#94a3b8] font-mono mt-1">Software Engineering Department — Assiut National University</p>
+          <div class="mt-6 p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center text-xs font-mono">
+            <span class="text-slate-300">Expected Graduation: 2029</span>
+            <span class="text-[#f59e0b] font-bold">GPA: 3.0 / 4.0</span>
+          </div>
+        </div>
+
+        <!-- Course Certificate Card -->
+        <div class="cyber-card p-8 rounded-2xl">
+          <span class="text-xs uppercase font-mono text-[#f59e0b] font-bold block mb-2">// CERTIFICATIONS</span>
+          <h3 class="text-xl font-bold text-white">C++ Programming Course</h3>
+          <p class="text-sm text-[#94a3b8] font-mono mt-1">EX Code Academy</p>
+          <p class="text-xs text-[#cbd5e1] mt-4 leading-relaxed">
+            Intensive training covering core C++ language mechanisms, object-oriented design patterns, memory handling, and algorithm execution logic.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer Contact -->
+    <footer id="contact" class="max-w-7xl mx-auto px-8 py-16 border-t border-[#1e293b]">
+      <div class="cyber-card p-10 rounded-2xl text-center">
+        <h2 class="text-2xl font-mono font-bold text-white">&lt;GET_IN_TOUCH /&gt;</h2>
+        <p class="text-[#94a3b8] text-sm mt-2 max-w-md mx-auto">
+          Eager to leverage technical skills in a challenging software engineering internship or entry-level role.
+        </p>
+        <div class="mt-6 flex flex-wrap justify-center gap-4">
+          <a href="mailto:embabymahmoud541@gmail.com" class="px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-black font-mono font-bold text-xs rounded-lg transition">
+            embabymahmoud541@gmail.com
+          </a>
+          <a href="tel:+201093055947" class="px-6 py-3 cyber-card text-[#cbd5e1] font-mono text-xs rounded-lg transition">
+            (+20) 1093055947
+          </a>
+        </div>
+        <div class="mt-8 text-xs font-mono text-[#64748b]">
+          <span>Assiut, Egypt</span> • <a href="https://linkedin.com/in/mahmoud-embaby-b670393a4" target="_blank" class="hover:text-[#f59e0b] transition">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    window.addEventListener('load', () => {
+
+      // 1. Matrix Code Rain
+      const mCanvas = document.getElementById('matrix-canvas');
+      if (mCanvas) {
+        const mCtx = mCanvas.getContext('2d');
+        function resizeMatrix() {
+          mCanvas.width = window.innerWidth;
+          mCanvas.height = window.innerHeight;
+        }
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
+
+        const chars = '01 C++ OOP DSA STL CODEFORCES ALGORITHM';
+        const fontSize = 13;
+        const columns = Math.floor(mCanvas.width / fontSize);
+        const drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+          mCtx.fillStyle = 'rgba(7, 10, 18, 0.08)';
+          mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+          mCtx.fillStyle = '#f59e0b';
+          mCtx.font = fontSize + 'px monospace';
+
+          for (let i = 0; i < drops.length; i++) {
+            const text = chars.charAt(Math.floor(Math.random() * chars.length));
+            mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > mCanvas.height && Math.random() > 0.975) {
+              drops[i] = 0;
+            }
+            drops[i]++;
+          }
+          requestAnimationFrame(drawMatrix);
+        }
+        drawMatrix();
+      }
+
+      // 2. Light Ribbon Follower
+      const trailCanvas = document.getElementById('light-ribbon-canvas');
+      if (trailCanvas) {
+        const ctx = trailCanvas.getContext('2d');
+        let points = [];
+
+        function resizeTrail() {
+          trailCanvas.width = window.innerWidth;
+          trailCanvas.height = window.innerHeight;
+        }
+        resizeTrail();
+        window.addEventListener('resize', resizeTrail);
+
+        window.addEventListener('mousemove', (e) => {
+          points.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+        });
+
+        function drawRibbon() {
+          ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+          const now = Date.now();
+          points = points.filter(p => now - p.time < 350);
+
+          if (points.length > 2) {
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+
+            for (let i = 1; i < points.length; i++) {
+              const prev = points[i - 1];
+              const curr = points[i];
+              const ageRatio = (now - curr.time) / 350;
+              const opacity = Math.max(0, 1 - ageRatio);
+              const width = (1 - ageRatio) * 8 + 1;
+
+              ctx.beginPath();
+              ctx.moveTo(prev.x, prev.y);
+              ctx.lineTo(curr.x, curr.y);
+              ctx.strokeStyle = `rgba(245, 158, 11, ${opacity * 0.75})`;
+              ctx.lineWidth = width;
+              ctx.shadowBlur = 10;
+              ctx.shadowColor = 'rgba(245, 158, 11, 0.8)';
+              ctx.stroke();
+            }
+          }
+          requestAnimationFrame(drawRibbon);
+        }
+        drawRibbon();
+      }
+
+      // 3. 3D Amber Wireframe Cube
+      const canvas = document.getElementById('cube3dCanvas');
+      const container = document.getElementById('chart-container');
+
+      if (canvas && container && typeof THREE !== 'undefined') {
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+        camera.position.set(0, 0, 6);
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+        function resize3D() {
+          const w = container.clientWidth || 300;
+          const h = container.clientHeight || 300;
+          renderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        resize3D();
+        window.addEventListener('resize', resize3D);
+
+        const cubeGroup = new THREE.Group();
+        scene.add(cubeGroup);
+
+        const outerGeo = new THREE.BoxGeometry(2, 2, 2);
+        const outerMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, wireframe: true });
+        const outerCube = new THREE.Mesh(outerGeo, outerMat);
+        cubeGroup.add(outerCube);
+
+        const innerGeo = new THREE.BoxGeometry(1, 1, 1);
+        const innerMat = new THREE.MeshStandardMaterial({ color: 0xea580c, transparent: true, opacity: 0.8 });
+        const innerCube = new THREE.Mesh(innerGeo, innerMat);
+        cubeGroup.add(innerCube);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xf59e0b, 2, 20);
+        pointLight.position.set(4, 4, 4);
+        scene.add(pointLight);
+
+        let isDragging = false;
+        let prevMouse = { x: 0, y: 0 };
+
+        canvas.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          prevMouse = { x: e.clientX, y: e.clientY };
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - prevMouse.x;
+          const dy = e.clientY - prevMouse.y;
+
+          cubeGroup.rotation.y += dx * 0.01;
+          cubeGroup.rotation.x += dy * 0.01;
+          prevMouse = { x: e.clientX, y: e.clientY };
+        });
+
+        function animate3D() {
+          requestAnimationFrame(animate3D);
+          if (!isDragging) {
+            cubeGroup.rotation.y += 0.008;
+            cubeGroup.rotation.x += 0.004;
+          }
+          renderer.render(scene, camera);
+        }
+        animate3D();
+        setTimeout(resize3D, 50);
+      }
+    });
+  </script>
+</body>
+</html>
